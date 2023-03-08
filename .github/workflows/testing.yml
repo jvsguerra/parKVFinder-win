@@ -8,7 +8,7 @@ on:
 
 jobs:
   ubuntu-testing:
-    name: Test on Windows with gcc-${{ matrix.gcc }}
+    name: Test on Windows with MinGW
     runs-on: windows-latest
     strategy:
       fail-fast: true
@@ -21,11 +21,12 @@ jobs:
       - name: Build parKVFinder
         run: |
           gcc -v
-          # make clean
-          # make
-          # sudo make link
-#       - name: Integration testing
-#         run: |
-#           export KVFinder_PATH=/home/runner/work/parKVFinder/parKVFinder
-#           bash tests/testing.sh
-#           cat input/KV_Files/1FMO/1FMO.KVFinder.results.toml
+          make clean
+          make
+      - name: Integration testing
+        run: |
+          set KVFinder_PATH=/home/runner/work/parKVFinder-win/parKVFinder-win
+          parKVFinder-win64.exe -h
+          parKVFinder-win64.exe input/1FMO.pdb
+          cat input/KV_Files/1FMO/1FMO.KVFinder.results.toml
+          #           bash tests/testing.sh
