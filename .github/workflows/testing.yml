@@ -1,0 +1,31 @@
+name: Integration testing
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  ubuntu-testing:
+    name: Test on Windows with gcc-${{ matrix.gcc }}
+    runs-on: windows-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+      - name: Build parKVFinder
+        run: |
+          gcc -v
+          # make clean
+          # make
+          # sudo make link
+#       - name: Integration testing
+#         run: |
+#           export KVFinder_PATH=/home/runner/work/parKVFinder/parKVFinder
+#           bash tests/testing.sh
+#           cat input/KV_Files/1FMO/1FMO.KVFinder.results.toml
